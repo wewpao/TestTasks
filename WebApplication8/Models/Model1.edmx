@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestTaskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderType" Type="varchar(max)" />
+          <Property Name="Import" Type="bit" />
+          <Property Name="PickupStoreNumber" Type="varchar(max)" />
+          <Property Name="PickupStoreName" Type="varchar(max)" />
+          <Property Name="PickupLatitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="PickupLongitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="PickupFormattedAddress" Type="varchar(max)" />
+          <Property Name="PickupContactFirstName" Type="varchar(max)" />
+          <Property Name="PickupContactLastName" Type="varchar(max)" />
+          <Property Name="PickupContactEmail" Type="varchar(max)" />
+          <Property Name="PickupContactMobileNumber" Type="varchar(max)" />
+          <Property Name="PickupEnableSMSNotification" Type="bit" />
+          <Property Name="PickupTime" Type="time" Precision="7" />
+          <Property Name="PickupToleranceMinutes" Type="int" />
+          <Property Name="PickupServiceTime" Type="int" />
+          <Property Name="DeliveryStoreNumber" Type="varchar(max)" />
+          <Property Name="DeliveryStoreName" Type="varchar(max)" />
+          <Property Name="DeliveryLatitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="DeliveryLongitude" Type="decimal" Precision="9" Scale="6" />
+          <Property Name="DeliveryFormattedAddress" Type="varchar(max)" />
+          <Property Name="DeliveryContactFirstName" Type="varchar(max)" />
+          <Property Name="DeliveryContactLastName" Type="varchar(max)" />
+          <Property Name="DeliveryContactEmail" Type="varchar(max)" />
+          <Property Name="DeliveryContactMobileNumber" Type="varchar(max)" />
+          <Property Name="DeliveryEnableSMSNotification" Type="bit" />
+          <Property Name="DeliveryTime" Type="time" Precision="7" />
+          <Property Name="DeliveryToleranceMinutes" Type="int" />
+          <Property Name="DeliveryServiceTimeMinutes" Type="int" />
+          <Property Name="OrderDetails" Type="nvarchar(max)" />
+          <Property Name="AssignedDriver" Type="nvarchar" MaxLength="100" />
+          <Property Name="CustomerReference" Type="varchar(max)" />
+          <Property Name="Payer" Type="varchar(max)" />
+          <Property Name="Vehicle" Type="varchar(max)" />
+          <Property Name="Weight" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="TestTaskModelStoreContainer">
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestTaskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TestTaskEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Orders" EntityType="TestTaskModel.Order" />
+        </EntityContainer>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Import" Type="Boolean" />
+          <Property Name="PickupStoreNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupStoreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupLatitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="PickupLongitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="PickupFormattedAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupContactFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupContactLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupContactEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupContactMobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PickupEnableSMSNotification" Type="Boolean" />
+          <Property Name="PickupTime" Type="Time" Precision="7" />
+          <Property Name="PickupToleranceMinutes" Type="Int32" />
+          <Property Name="PickupServiceTime" Type="Int32" />
+          <Property Name="DeliveryStoreNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryStoreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryLatitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="DeliveryLongitude" Type="Decimal" Precision="9" Scale="6" />
+          <Property Name="DeliveryFormattedAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryContactFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryContactLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryContactEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryContactMobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryEnableSMSNotification" Type="Boolean" />
+          <Property Name="DeliveryTime" Type="Time" Precision="7" />
+          <Property Name="DeliveryToleranceMinutes" Type="Int32" />
+          <Property Name="DeliveryServiceTimeMinutes" Type="Int32" />
+          <Property Name="OrderDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedDriver" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerReference" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Payer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Vehicle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Weight" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestTaskModelStoreContainer" CdmEntityContainer="TestTaskEntities" >
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TestTaskModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Vehicle" ColumnName="Vehicle" />
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="CustomerReference" ColumnName="CustomerReference" />
+                <ScalarProperty Name="AssignedDriver" ColumnName="AssignedDriver" />
+                <ScalarProperty Name="OrderDetails" ColumnName="OrderDetails" />
+                <ScalarProperty Name="DeliveryServiceTimeMinutes" ColumnName="DeliveryServiceTimeMinutes" />
+                <ScalarProperty Name="DeliveryToleranceMinutes" ColumnName="DeliveryToleranceMinutes" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="DeliveryEnableSMSNotification" ColumnName="DeliveryEnableSMSNotification" />
+                <ScalarProperty Name="DeliveryContactMobileNumber" ColumnName="DeliveryContactMobileNumber" />
+                <ScalarProperty Name="DeliveryContactEmail" ColumnName="DeliveryContactEmail" />
+                <ScalarProperty Name="DeliveryContactLastName" ColumnName="DeliveryContactLastName" />
+                <ScalarProperty Name="DeliveryContactFirstName" ColumnName="DeliveryContactFirstName" />
+                <ScalarProperty Name="DeliveryFormattedAddress" ColumnName="DeliveryFormattedAddress" />
+                <ScalarProperty Name="DeliveryLongitude" ColumnName="DeliveryLongitude" />
+                <ScalarProperty Name="DeliveryLatitude" ColumnName="DeliveryLatitude" />
+                <ScalarProperty Name="DeliveryStoreName" ColumnName="DeliveryStoreName" />
+                <ScalarProperty Name="DeliveryStoreNumber" ColumnName="DeliveryStoreNumber" />
+                <ScalarProperty Name="PickupServiceTime" ColumnName="PickupServiceTime" />
+                <ScalarProperty Name="PickupToleranceMinutes" ColumnName="PickupToleranceMinutes" />
+                <ScalarProperty Name="PickupTime" ColumnName="PickupTime" />
+                <ScalarProperty Name="PickupEnableSMSNotification" ColumnName="PickupEnableSMSNotification" />
+                <ScalarProperty Name="PickupContactMobileNumber" ColumnName="PickupContactMobileNumber" />
+                <ScalarProperty Name="PickupContactEmail" ColumnName="PickupContactEmail" />
+                <ScalarProperty Name="PickupContactLastName" ColumnName="PickupContactLastName" />
+                <ScalarProperty Name="PickupContactFirstName" ColumnName="PickupContactFirstName" />
+                <ScalarProperty Name="PickupFormattedAddress" ColumnName="PickupFormattedAddress" />
+                <ScalarProperty Name="PickupLongitude" ColumnName="PickupLongitude" />
+                <ScalarProperty Name="PickupLatitude" ColumnName="PickupLatitude" />
+                <ScalarProperty Name="PickupStoreName" ColumnName="PickupStoreName" />
+                <ScalarProperty Name="PickupStoreNumber" ColumnName="PickupStoreNumber" />
+                <ScalarProperty Name="Import" ColumnName="Import" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

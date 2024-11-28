@@ -1,0 +1,708 @@
+﻿@model WebApplication8.Models.Order
+@{
+    ViewBag.Title = "Order Import";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Validation</title>
+
+    <!-- Link to jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Order Import</h2>
+
+    <!-- Form for file upload -->
+    <form class="mb-3" id="ImportOrder" method="post" enctype="multipart/form-data" asp-action="ImportOrder" action="@Url.Action("ImportOrder")">
+        <div class="form-group">
+            <label for="excelFile" class="form-label">Upload Excel File</label>
+            <div class="input-group">
+                <!-- File input -->
+                <input type="file" id="excelFile" name="excelFile" accept=".xlsx, .xls" class="form-control" />
+
+                <!-- Button to submit the form -->
+                <button class="btn btn-primary" type="submit" id="ImportOrder">Import Excel</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="scrollable-container">
+                <!-- Form for displaying dropdowns and saving order -->
+                <form asp-action="SaveOrder" method="post">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- OrderType dropdown -->
+                            <tr>
+                                <td>Order Type</td>
+                                <td>
+                                    <select asp-for="OrderType" class="form-control filter" id="orderType">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.OrderTypes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- Import dropdown -->
+                            <tr>
+                                <td>Import</td>
+                                <td>
+                                    <select asp-for="Import" class="form-control filter" id="import">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.ImportOptions)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupStoreNumber dropdown -->
+                            <tr>
+                                <td>Pickup Store Number</td>
+                                <td>
+                                    <select asp-for="PickupStoreNumber" class="form-control filter" id="pickupStoreNumber">
+                                        <option value="">Please select</option>
+                                        @foreach (var storeNumber in ViewBag.PickupStoreNumbers)
+                                        {
+                                            <option value="@storeNumber">@storeNumber</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupStoreName dropdown -->
+                            <tr>
+                                <td>Pickup Store Name</td>
+                                <td>
+                                    <select asp-for="PickupStoreName" class="form-control filter" id="pickupStoreName">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupStoreNames)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupLatitude dropdown -->
+                            <tr>
+                                <td>Pickup Latitude</td>
+                                <td>
+                                    <select asp-for="PickupLatitude" class="form-control filter" id="pickupLatitude">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupLatitudes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupLongitude dropdown -->
+                            <tr>
+                                <td>Pickup Longitude</td>
+                                <td>
+                                    <select asp-for="PickupLongitude" class="form-control filter" id="pickupLongitude">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupLongitudes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupFormattedAddress dropdown -->
+                            <tr>
+                                <td>Pickup Formatted Address</td>
+                                <td>
+                                    <select asp-for="PickupFormattedAddress" class="form-control filter" id="pickupFormattedAddress">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupFormattedAddresses)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupContactFirstName dropdown -->
+                            <tr>
+                                <td>Pickup Contact First Name</td>
+                                <td>
+                                    <select asp-for="PickupContactFirstName" class="form-control filter" id="pickupContactFirstName">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupContactFirstNames)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupContactLastName dropdown -->
+                            <tr>
+                                <td>Pickup Contact Last Name</td>
+                                <td>
+                                    <select asp-for="PickupContactLastName" class="form-control filter" id="pickupContactLastName">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupContactLastNames)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupContactEmail dropdown -->
+                            <tr>
+                                <td>Pickup Contact Email</td>
+                                <td>
+                                    <select asp-for="PickupContactEmail" class="form-control filter" id="pickupContactEmail">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupContactEmails)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupContactMobileNumber dropdown -->
+                            <tr>
+                                <td>Pickup Contact Mobile Number</td>
+                                <td>
+                                    <select asp-for="PickupContactMobileNumber" class="form-control filter" id="pickupContactMobileNumber">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupContactMobileNumbers)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupEnableSMSNotification dropdown -->
+                            <tr>
+                                <td>Pickup Enable SMS Notification</td>
+                                <td>
+                                    <select asp-for="PickupEnableSMSNotification" class="form-control filter" id="pickupEnableSMSNotification">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupEnableSMSNotifications)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupTime dropdown -->
+                            <tr>
+                                <td>Pickup Time</td>
+                                <td>
+                                    <select asp-for="PickupTime" class="form-control filter" id="pickupTime">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupTimes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupToleranceMinutes dropdown -->
+                            <tr>
+                                <td>Pickup Tolerance Minutes</td>
+                                <td>
+                                    <select asp-for="PickupToleranceMinutes" class="form-control filter" id="pickupToleranceMinutes">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupToleranceMinutes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- PickupServiceTime dropdown -->
+                            <tr>
+                                <td>Pickup Service Time</td>
+                                <td>
+                                    <select asp-for="PickupServiceTime" class="form-control filter" id="pickupServiceTime">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.PickupServiceTimes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryStoreNumber dropdown -->
+                            <tr>
+                                <td>Delivery Store Number</td>
+                                <td>
+                                    <select asp-for="DeliveryStoreNumber" class="form-control filter" id="deliveryStoreNumber">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryStoreNumbers)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryStoreName dropdown -->
+                            <tr>
+                                <td>Delivery Store Name</td>
+                                <td>
+                                    <select asp-for="DeliveryStoreName" class="form-control filter" id="deliveryStoreName">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryStoreNames)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryLatitude dropdown -->
+                            <tr>
+                                <td>Delivery Latitude</td>
+                                <td>
+                                    <select asp-for="DeliveryLatitude" class="form-control filter" id="deliveryLatitude">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryLatitudes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryLongitude dropdown -->
+                            <tr>
+                                <td>Delivery Longitude</td>
+                                <td>
+                                    <select asp-for="DeliveryLongitude" class="form-control filter" id="deliveryLongitude">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryLongitudes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryFormattedAddress dropdown -->
+                            <tr>
+                                <td>Delivery Formatted Address</td>
+                                <td>
+                                    <select asp-for="DeliveryFormattedAddress" class="form-control filter" id="deliveryFormattedAddress">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryFormattedAddresses)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryContactFirstName dropdown -->
+                            <tr>
+                                <td>Delivery Contact First Name</td>
+                                <td>
+                                    <select asp-for="DeliveryContactFirstName" class="form-control filter" id="deliveryContactFirstName">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryContactFirstNames)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryContactLastName dropdown -->
+                            <tr>
+                                <td>Delivery Contact Last Name</td>
+                                <td>
+                                    <select asp-for="DeliveryContactLastName" class="form-control filter" id="deliveryContactLastName">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryContactLastNames)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryContactEmail dropdown -->
+                            <tr>
+                                <td>Delivery Contact Email</td>
+                                <td>
+                                    <select asp-for="DeliveryContactEmail" class="form-control filter" id="deliveryContactEmail">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryContactEmails)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryContactMobileNumber dropdown -->
+                            <tr>
+                                <td>Delivery Contact Mobile Number</td>
+                                <td>
+                                    <select asp-for="DeliveryContactMobileNumber" class="form-control filter" id="deliveryContactMobileNumber">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryContactMobileNumbers)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryEnableSMSNotification dropdown -->
+                            <tr>
+                                <td>Delivery Enable SMS Notification</td>
+                                <td>
+                                    <select asp-for="DeliveryEnableSMSNotification" class="form-control filter" id="deliveryEnableSMSNotification">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryEnableSMSNotifications)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryTime dropdown -->
+                            <tr>
+                                <td>Delivery Time</td>
+                                <td>
+                                    <select asp-for="DeliveryTime" class="form-control filter" id="deliveryTime">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryTimes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryToleranceMinutes dropdown -->
+                            <tr>
+                                <td>Delivery Tolerance Minutes</td>
+                                <td>
+                                    <select asp-for="DeliveryToleranceMinutes" class="form-control filter" id="deliveryToleranceMinutes">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryToleranceMinutes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <!-- DeliveryServiceTime dropdown -->
+                            <tr>
+                                <td>Delivery Service Time</td>
+                                <td>
+                                    <select asp-for="DeliveryServiceTime" class="form-control filter" id="deliveryServiceTime">
+                                        <option value="">Please select</option>
+                                        @foreach (var item in ViewBag.DeliveryServiceTimeMinutes)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+            <div class="col-6">
+                <div class="scrollable-container">
+                    @foreach (var order in ViewBag.orderResult)
+                    {
+                        <div class="order"
+                             data-orderType="@order.OrderType"
+                             data-import="@order.Import"
+                             data-pickupStoreName="@order.PickupStoreName"
+                             data-pickupStoreNumber="@order.PickupStoreNumber"
+                             data-pickupLatitude="@order.PickupLatitude"
+                             data-pickupLongitude="@order.PickupLongitude"
+                             data-pickupFormattedAddress="@order.PickupFormattedAddress"
+                             data-pickupContactFirstName="@order.PickupContactFirstName"
+                             data-pickupContactLastName="@order.PickupContactLastName"
+                             data-pickupContactEmail="@order.PickupContactEmail"
+                             data-pickupContactMobileNumber="@order.PickupContactMobileNumber"
+                             data-pickupEnableSMSNotification="@order.PickupEnableSMSNotification"
+                             data-pickupTime="@order.PickupTime"
+                             data-pickupToleranceMinutes="@order.PickupToleranceMinutes"
+                             data-pickupServiceTime="@order.PickupServiceTime"
+                             data-deliveryStoreNumber="@order.DeliveryStoreNumber"
+                             data-deliveryStoreName="@order.DeliveryStoreName"
+                             data-deliveryLatitude="@order.DeliveryLatitude"
+                             data-deliveryLongitude="@order.DeliveryLongitude"
+                             data-deliveryFormattedAddress="@order.DeliveryFormattedAddress"
+                             data-deliveryContactFirstName="@order.DeliveryContactFirstName"
+                             data-deliveryContactLastName="@order.DeliveryContactLastName"
+                             data-deliveryContactEmail="@order.DeliveryContactEmail"
+                             data-deliveryContactMobileNumber="@order.DeliveryContactMobileNumber"
+                             data-deliveryEnableSMSNotification="@order.DeliveryEnableSMSNotification"
+                             data-deliveryTime="@order.DeliveryTime"
+                             data-deliveryToleranceMinutes="@order.DeliveryToleranceMinutes"
+                             data-deliveryServiceTimeMinutes="@order.DeliveryServiceTimeMinutes"
+                             data-orderDetails="@order.OrderDetails"
+                             data-assignedDriver="@order.AssignedDriver"
+                             data-customerReference="@order.CustomerReference"
+                             data-payer="@order.Payer"
+                             data-vehicle="@order.Vehicle"
+                             data-weight="@order.Weight"
+                             data-price="@order.Price">
+
+                            <div class="order-item">
+                                <strong>Order Type:</strong> @order.OrderType
+                            </div>
+                            <div class="order-item">
+                                <strong>Import:</strong> @((bool)order.Import ? "Yes" : "No")
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Store Number:</strong> @order.PickupStoreNumber
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Store Name:</strong> @order.PickupStoreName
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Latitude:</strong> @order.PickupLatitude
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Longitude:</strong> @order.PickupLongitude
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Formatted Address:</strong> @order.PickupFormattedAddress
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Contact First Name:</strong> @order.PickupContactFirstName
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Contact Last Name:</strong> @order.PickupContactLastName
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Contact Email:</strong> @order.PickupContactEmail
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Contact Mobile Number:</strong> @order.PickupContactMobileNumber
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Enable SMS Notification:</strong> @((bool)order.PickupEnableSMSNotification ? "Yes" : "No")
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Time:</strong> @order.PickupTime
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Tolerance Minutes:</strong> @order.PickupToleranceMinutes
+                            </div>
+                            <div class="order-item">
+                                <strong>Pickup Service Time:</strong> @order.PickupServiceTime
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Store Number:</strong> @order.DeliveryStoreNumber
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Store Name:</strong> @order.DeliveryStoreName
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Latitude:</strong> @order.DeliveryLatitude
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Longitude:</strong> @order.DeliveryLongitude
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Formatted Address:</strong> @order.DeliveryFormattedAddress
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Contact First Name:</strong> @order.DeliveryContactFirstName
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Contact Last Name:</strong> @order.DeliveryContactLastName
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Contact Email:</strong> @order.DeliveryContactEmail
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Contact Mobile Number:</strong> @order.DeliveryContactMobileNumber
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Enable SMS Notification:</strong> @((bool)order.DeliveryEnableSMSNotification ? "Yes" : "No")
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Time:</strong> @order.DeliveryTime
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Tolerance Minutes:</strong> @order.DeliveryToleranceMinutes
+                            </div>
+                            <div class="order-item">
+                                <strong>Delivery Service Time Minutes:</strong> @order.DeliveryServiceTimeMinutes
+                            </div>
+                            <div class="order-item">
+                                <strong>Order Details:</strong> @order.OrderDetails
+                            </div>
+                            <div class="order-item">
+                                <strong>Assigned Driver:</strong> @order.AssignedDriver
+                            </div>
+                            <div class="order-item">
+                                <strong>Customer Reference:</strong> @order.CustomerReference
+                            </div>
+                            <div class="order-item">
+                                <strong>Payer:</strong> @order.Payer
+                            </div>
+                            <div class="order-item">
+                                <strong>Vehicle:</strong> @order.Vehicle
+                            </div>
+                            <div class="order-item">
+                                <strong>Weight:</strong> @order.Weight
+                            </div>
+                            <div class="order-item">
+                                <strong>Price:</strong> @order.Price
+                            </div>
+                            <hr>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <!-- Button to submit the form -->
+                <button class="btn btn-primary w-100" style="max-width: none;" type="submit" id="validate">Validate</button>
+            </div>
+        </div>
+
+    <!-- Script to trigger AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".filter").change(function () {
+                var selectedFilters = {};
+
+                $(".filter").each(function () {
+                    var dropdownId = $(this).attr("id");
+                    var selectedValue = $(this).val();
+                    // console.log("Dropdown ID: " + dropdownId + ", Value: " + selectedValue);  // Debugging line
+
+                    if (selectedValue) {
+                        selectedFilters[dropdownId] = selectedValue;
+                    }
+                });
+
+                // 1
+                // console.log(Object.keys(selectedFilters).length);
+
+                // Iterate over the keys in selectedFilters
+                Object.keys(selectedFilters).forEach(function (key) {
+                    // Index: 13094 Dropdown ID: pickupStoreNumber, Value: 001
+                    // console.log("Dropdown ID: " + key + ", Value: " + selectedFilters[key]);
+                });
+
+                $(".scrollable-container .order").each(function () {
+                    var showItem = true;  // Initial assumption is that the item should be shown
+
+                    // Get all data attributes for the current element
+                    var dataAttributes = $(this).data();
+
+                    // Example: Iterate over all data attributes
+                    $.each(dataAttributes, function (key, value) {
+
+                        // Example of key-value pairs (e.g., "price": "55.00")
+                        var key1 = key;
+                        var value1 = value;
+
+                        // Iterate over selectedFilters keys
+                        Object.keys(selectedFilters).forEach(function (filterKey) {
+                            // Compare the key in data attributes with selected filter keys (case-insensitive)
+                            if (key1.toLowerCase() == filterKey.toLowerCase() && selectedFilters[filterKey].toLowerCase() != value1.toLowerCase()) {
+                                console.log(key1 + " = " + filterKey + " : " + selectedFilters[filterKey] + " = " + value1);
+                                showItem = false;  // Mark the item to be hidden
+                            }
+                        });
+                    });
+
+                    // If showItem is false, hide the current .order element
+                    if (!showItem) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
+
+            });
+        });
+
+    </script>
+
+
+    <!-- CSS to make the table scrollable and improve design -->
+    <style>
+        .scrollable-container {
+            max-height: 600px; /* Adjust this value based on your needs */
+            overflow-y: auto; /* Enables vertical scrolling */
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .order {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .order-item {
+            margin-bottom: 10px;
+        }
+
+            .order-item strong {
+                font-weight: bold;
+            }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+
+        .order:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .order:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+</body>
+</html>
