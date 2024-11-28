@@ -1,0 +1,59 @@
+drop database TestTask;
+
+create database TestTask;
+
+USE [TestTask]
+GO
+
+/****** Object:  Table [dbo].[Orders]    Script Date: 16/11/2024 10:18:38 am ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Orders](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderType] [varchar](max) NULL,
+	[Import] [bit] NULL,
+	[PickupStoreNumber] [varchar](max) NULL,
+	[PickupStoreName] [varchar](max) NULL,
+	[PickupLatitude] [decimal](9, 6) NULL,
+	[PickupLongitude] [decimal](9, 6) NULL,
+	[PickupFormattedAddress] [varchar](max) NULL,
+	[PickupContactFirstName] [varchar](max) NULL,
+	[PickupContactLastName] [varchar](max) NULL,
+	[PickupContactEmail] [varchar](max) NULL,
+	[PickupContactMobileNumber] [varchar](max) NULL,
+	[PickupEnableSMSNotification] [bit] NULL,
+	[PickupTime] [time](7) NULL,
+	[PickupToleranceMinutes] [int] NULL,
+	[PickupServiceTime] [int] NULL,
+	[DeliveryStoreNumber] [varchar](max) NULL,
+	[DeliveryStoreName] [varchar](max) NULL,
+	[DeliveryLatitude] [decimal](9, 6) NULL,
+	[DeliveryLongitude] [decimal](9, 6) NULL,
+	[DeliveryFormattedAddress] [varchar](max) NULL,
+	[DeliveryContactFirstName] [varchar](max) NULL,
+	[DeliveryContactLastName] [varchar](max) NULL,
+	[DeliveryContactEmail] [varchar](max) NULL,
+	[DeliveryContactMobileNumber] [varchar](max) NULL,
+	[DeliveryEnableSMSNotification] [bit] NULL,
+	[DeliveryTime] [time](7) NULL,
+	[DeliveryToleranceMinutes] [int] NULL,
+	[DeliveryServiceTimeMinutes] [int] NULL,
+	[OrderDetails] [nvarchar](max) NULL,
+	[AssignedDriver] [nvarchar](100) NULL,
+	[CustomerReference] [varchar](max) NULL,
+	[Payer] [varchar](max) NULL,
+	[Vehicle] [varchar](max) NULL,
+	[Weight] [decimal](10, 2) NULL,
+	[Price] [decimal](18, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
